@@ -1,12 +1,12 @@
 import { createStore } from 'vuex'
 
 export default createStore({
-  state: {
+  state: () => {
+    return {
+      name:'大清'
+    }
   },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+  mutations: {},
+  actions: {},
+  modules: {}
 })
