@@ -7,6 +7,7 @@ module.exports = {
         common:'@/common',
         components:'@/components',
         network:'@/network',
+        assets:'@/assets'
       }
     }
   }

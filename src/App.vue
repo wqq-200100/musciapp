@@ -1,14 +1,13 @@
 <template>
-  <tab-contor/>
-    <router-view/>
+  <router-view/>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import tabContor from './components/content/tabContor/tabContor.vue'
+// import tabControl from './components/content/tabControl/TabControl.vue'
+// import Play from './components/common/play/Play'
 
 export default defineComponent({
-  components:{tabContor},
   setup() {
     return {}
   }

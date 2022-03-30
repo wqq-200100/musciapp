@@ -50,6 +50,16 @@ export default defineComponent({
 </script>
 
 <style scoped lang='less'>
+.tab-bar{
+  background-color: #ffffff;
+  height: 49px;
+}
+.play{
+  width: 100%;
+  height: 20px;
+  background-color: orange;
+  top: 20px;
+}
 .link{
   flex: 1;
   color: #666;
@@ -57,4 +67,8 @@ export default defineComponent({
 &.router-link-exact-active{
    color: red;
  }
+.iconfont{
+  font-size: 26px;
+  margin-bottom: -9px;
+}
 </style>

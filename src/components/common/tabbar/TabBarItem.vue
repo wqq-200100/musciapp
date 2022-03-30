@@ -1,9 +1,7 @@
 <template>
     <div class='tab-bar-item' >
-      <div>
         <slot name='item-icon'></slot>
         <slot name='item-text'></slot>
-      </div>
     </div>
 </template>
 
@@ -12,10 +10,8 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   setup() {
-    let isActive = false
 
     return {
-      isActive,
     }
   }
 })
@@ -26,9 +22,7 @@ export default defineComponent({
   flex: 1;
   text-align: center;
   height: 49px;
-  font-size: 14px;
-}
-.active{
-  color: red;
+  font-size: 12px;
+
 }
 </style>

@@ -16,6 +16,12 @@
     box-sizing: border-box;
 }
 
+img{
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
 body{
     user-select: none; /*禁止用户选择文件和图片*/
     background: var(--color-background);

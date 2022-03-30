@@ -2,28 +2,31 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   { path: '/',
-    redirect: '/find'
+    redirect: '/Login'
   },
-
+  {
+    path: '/Login',
+    component:() => import('../views/login/Login.vue')
+  },
   {
     path: '/find',
-    component:() => import('../views/find/find.vue')
+    component:() => import('../views/find/Find.vue')
   },
   {
     path: '/recommend',
-    component:() => import('../views/recommend/recommend.vue')
+    component:() => import('../views/recommend/Recommend.vue')
   },
   {
     path: '/home',
-    component:() => import('../views/home/home.vue')
+    component:() => import('../views/home/Home.vue')
   },
   {
     path: '/attention',
-    component:() => import('../views/attention/attention.vue')
+    component:() => import('../views/attention/Attention.vue')
   },
   {
     path: '/cloud',
-    component:() => import('../views/cloud/cloud.vue')
+    component:() => import('../views/cloud/Cloud.vue')
   }
 ]
 
