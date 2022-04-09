@@ -22,6 +22,6 @@ export default defineComponent({
   position: fixed; /*生成绝对定位的元素，相对于浏览器窗口进行定位。*/
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -1px;
 }
 </style>

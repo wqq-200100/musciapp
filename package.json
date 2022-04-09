@@ -8,12 +8,12 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
-    "ant-design-vue": "^2.2.8",
+    "ant-design-vue": "^3.1.1",
     "axios": "^0.26.1",
     "core-js": "^3.6.5",
     "css-loader": "^6.7.1",
     "vant": "^3.4.5",
-    "vue": "^3.0.0",
+    "vue": "^3.2.31",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
