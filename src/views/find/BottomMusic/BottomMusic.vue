@@ -25,7 +25,7 @@
 
 <script setup>
 import MusicTitle from '../../../components/content/musictitle/MusicTitle'
-import myvuex from '@/store/myvuex'
+import myvuex from '@/store'
 import { getMusicDataAction } from '../../../store/actions'
 import { recommendSons } from '../../../network/find'
 import { ref } from 'vue'

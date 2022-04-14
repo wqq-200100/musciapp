@@ -3,7 +3,6 @@
     <TopText/>
     <IconList/>
     <Content/>
-    <Bottom/>
   </div>
 </template>
 

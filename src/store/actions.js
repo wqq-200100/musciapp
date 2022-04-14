@@ -1,6 +1,6 @@
 // 定义动作 对一个操作 可以操作多个mutations的一个封装
 import { getMusic, getMusicUrl } from '../network/find'
-import store from './myvuex'
+import store from './index'
 
 
 export async function getMusicDataAction(id) {
@@ -14,7 +14,6 @@ export async function getMusicDataAction(id) {
   }
   const getMusicUrlRes = await getMusicUrl(id)
   //歌曲url
-
   const musicUrl = getMusicUrlRes.data[0].url
   localStorage.setItem('musicInfo',JSON.stringify({ ...musicInfo, musicUrl }))
 

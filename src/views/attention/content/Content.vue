@@ -112,13 +112,12 @@
 <script setup>
 import { ref, inject } from 'vue'
 import { getMusicUrl } from '../../../network/find'
-import myvuex from '../../../store/myvuex'
+import myvuex from '../../../store'
 
 async function changeMusic(id){
   const res = await getMusicUrl(id)
   const url = res.data[0].url
   myvuex.commit('musicUrlSetter',url)
-  console.log(res)
 }
 
 </script>

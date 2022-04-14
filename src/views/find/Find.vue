@@ -5,7 +5,6 @@
     <IconList/>
     <MusicList/>
     <BottomMusic/>
-    <Bottom/>
   </div>
 </template>
 

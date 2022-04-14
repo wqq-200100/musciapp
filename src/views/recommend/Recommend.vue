@@ -6,7 +6,6 @@
     <div class='content'></div>
     <MusicTitle/>
     <LikeMusic/>
-    <Bottom/>
   </div>
 </template>
 

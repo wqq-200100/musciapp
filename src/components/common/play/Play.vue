@@ -3,50 +3,51 @@
     <audio ref='audioRef' :src='musicUrl || musicHistory.musicUrl'  />
   </div>
 
-  <div class='play' @click='goto'>
+  <div class='play'>
     <div class='play-left '>
-      <img :class='`onPlay ${isActive || "stop"}`' :src='musicInfo.picUrl || musicHistory.picUrl' alt=''>
+      <img :class='`onPlay ${musicIsActive || "stop"}`'
+           :src='musicInfo.picUrl || musicHistory.picUrl'
+           @click='goto'
+           alt=''>
       <span>{{ musicInfo.name || musicHistory.name }}</span>
     </div>
     <div class='play-right'>
-      <div @click='changePlay'>
-        <div v-if='isActive' class='iconfont icon-bofang1'></div>
+      <div @click='handleUrlChange'>
+        <div v-if='musicIsActive' class='iconfont icon-bofang1'></div>
         <div v-else class='iconfont icon-bofang '></div>
       </div>
-
       <div class='iconfont icon-liebiao1'></div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
-import myvuex from '@/store/myvuex'
+import { ref, watch, computed, onMounted } from 'vue'
+import myvuex from '@/store'
 import router from '../../../router'
+import { changePlay } from '../../../common/utils'
 
+// 获取state参数
 let musicUrl = computed(() => myvuex.state.musicUrl)
 let musicInfo = computed(() => myvuex.state.musicInfo)
-
+let musicIsActive = computed(() => myvuex.state.isActive)
 const musicHistory = JSON.parse(localStorage.getItem('musicInfo'))
-const isActive = ref(false)
 const audioRef = ref(null)
 
+// 页面加载完成后保存播放器的DOM元素
+onMounted(()=>{
+  myvuex.commit('setBofangqiDOM', audioRef)
+})
 watch(musicUrl, () => {
-  changePlay(musicUrl.value)
+  handleUrlChange()
 })
 
-function changePlay() {
-  isActive.value = !isActive.value
-  if (!isActive.value) {
-    audioRef.value.pause() // 停止播放
-  } else {
-    setTimeout(()=>{{
-      audioRef.value.play() // 开始播放
-    }}, 500)
-  }
+function handleUrlChange() {
+  changePlay()
 }
+
 function goto() {
-  router.push('./Player')
+  router.push('/Player')
 }
 
 </script>

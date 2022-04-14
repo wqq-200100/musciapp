@@ -29,12 +29,8 @@ const routes = [
     component:() => import('../views/cloud/Cloud.vue')
   },
   {
-    path: '/test',
-    component:() => import('../views/test/index')
-  },
-  {
     path: '/Player',
-    component:() => import('../views/player/Player.vue')
+    component:() => import('../components/common/play/player/Player.vue')
   }
 ]
 

@@ -1,7 +1,6 @@
 <template>
   <TopInput/>
   <Live/>
-  <Bottom/>
 </template>
 
 <script>

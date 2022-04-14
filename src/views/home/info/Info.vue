@@ -25,7 +25,6 @@ export default {
       const res = await getUserInfoByID(269987313)
       data.avatarUrl = res.profile.avatarUrl
       data.nickname = res.profile.nickname
-      console.log(data)
     }
     getUserINfo()
     return { data }
