@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app" style="width: 100vw;height: 100vh;"></div>
+<script type="module">
+  import { init } from "./node_modules/echarts/dist/echarts.esm.js";
+  let myCharts = init(document.querySelector('#app'))
+
+  function getData() {
+    return Array(5).fill(10).map(i =>({
+      value: ( Math.random() * 1000 ) >>0,
+      name: Math.random() * 1000
+    }))
+  }
+  const data = getData()
+
+  let option = {
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      top: '5%',
+      left: 'center'
+    },
+    series: [
+      {
+        name: 'Access From',
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: '#333',
+          borderWidth: 1
+        },
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: '40',
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data
+      }
+    ]
+  };
+  console.log(data)
+
+  myCharts.on('dblclick', e=>{
+    const opt = myCharts.getOption()
+    const newData = option.series[0].data.map(i=>{
+      if (e.data.value === i.value){
+        console.log('点击了这一行 value =', i.value)
+        return {...i, itemStyle:{
+          color:'#f00'
+          }}
+      }else {
+        return i
+      }
+    })
+
+    opt.series[0].data = newData
+    myCharts.setOption(opt)
+    console.log(e)
+    // option
+  })
+  myCharts.setOption(option)
+</script>
+</body>
+</html>
