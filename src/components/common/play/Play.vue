@@ -1,18 +1,18 @@
 <template>
   <div class='audio'>
-    <audio ref='audioRef' :src='musicUrl || musicHistory.musicUrl'  />
+    <audio ref='audioRef' :src='musicUrl || musicHistory.musicUrl' />
   </div>
 
   <div class='play'>
     <div class='play-left '>
       <img :class='`onPlay ${musicIsActive || "stop"}`'
            :src='musicInfo.picUrl || musicHistory.picUrl'
-           @click='goto'
-           alt=''>
+           alt=''
+           @click='goto'>
       <span>{{ musicInfo.name || musicHistory.name }}</span>
     </div>
     <div class='play-right'>
-      <div @click='handleUrlChange'>
+      <div @click='changePlay'>
         <div v-if='musicIsActive' class='iconfont icon-bofang1'></div>
         <div v-else class='iconfont icon-bofang '></div>
       </div>
@@ -31,20 +31,19 @@ import { changePlay } from '../../../common/utils'
 let musicUrl = computed(() => myvuex.state.musicUrl)
 let musicInfo = computed(() => myvuex.state.musicInfo)
 let musicIsActive = computed(() => myvuex.state.isActive)
+
 const musicHistory = JSON.parse(localStorage.getItem('musicInfo'))
 const audioRef = ref(null)
 
 // 页面加载完成后保存播放器的DOM元素
-onMounted(()=>{
+onMounted(() => {
+  console.log(`musicUrl`, musicUrl.value)
   myvuex.commit('setBofangqiDOM', audioRef)
 })
-watch(musicUrl, () => {
-  handleUrlChange()
-})
 
-function handleUrlChange() {
-  changePlay()
-}
+// watch(musicUrl, () => {
+//   changePlay()
+// })
 
 function goto() {
   router.push('/Player')
@@ -52,7 +51,7 @@ function goto() {
 
 </script>
 
-<style scoped lang='less'>
+<style lang='less' scoped>
 .onPlay {
   animation: xuanzhuan 3s linear infinite;
 }
@@ -88,7 +87,8 @@ function goto() {
     height: 50px;
     border: 7px solid black;
     border-radius: 50%;
-    margin-top: -4px;
+    margin-top: 4px;
+    display: inline-block;
   }
 
   .play-right {
@@ -101,10 +101,20 @@ function goto() {
   }
 
   .play-left {
+    width: 280px;
+    text-overflow: ellipsis; /* 超出内容显示为省略号 */
+    white-space: nowrap; /* 文本不进行换行 */
+    display: flex;
+    flex-direction: row;
 
     span {
       padding: 0 10px;
       font-size: 17px;
+      display: inline-block;
+      width: 260px;
+      overflow: hidden;
+      text-overflow: ellipsis; /* 超出内容显示为省略号 */
+      white-space: nowrap; /* 文本不进行换行 */
     }
   }
 }

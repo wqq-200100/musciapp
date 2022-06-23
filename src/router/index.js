@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import SongList from '../components/common/songlist/SongList'
 
 const routes = [
   { path: '/',
@@ -18,7 +19,10 @@ const routes = [
   },
   {
     path: '/home',
-    component:() => import('../views/home/Home.vue')
+    component:() => import('../views/home/Home.vue'),
+    children:[
+      { path:'SongList', component:() => import('../views/home/songList/SongList.vue') },
+    ]
   },
   {
     path: '/attention',
@@ -30,7 +34,12 @@ const routes = [
   },
   {
     path: '/Player',
-    component:() => import('../components/common/play/player/Player.vue')
+    component:() => import('../views/player/Player.vue')
+  },
+  {
+    path: '/SongListItem/:id',
+    name:'SongListItem',
+    component:() => import('../views/home/songListItem/SongListItem.vue')
   }
 ]
 

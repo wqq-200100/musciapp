@@ -5261,6 +5261,11 @@ lower-case@^1.1.1:
   resolved "https://registry.npmmirror.com/lower-case/-/lower-case-1.1.4.tgz#9a2cabd1b9e8e0ae993a4bf7d5875c39c42e8eac"
   integrity sha512-2Fgx1Ycm599x+WGpIYwJOvsjmXFzTSc34IwDWALRA/8AopUKAVPwfJ+h5+f85BCp0PWmmJcWzEpxOpoXycMpdA==
 
+lrc-file-parser@^1.2.7:
+  version "1.2.7"
+  resolved "https://registry.npmmirror.com/lrc-file-parser/-/lrc-file-parser-1.2.7.tgz#349918bb379ff99f2fb079ed3d61ea7b9a7f15e3"
+  integrity sha512-z2+1tUH3N054vFNXvF8F6g0vXWXf66IWJC1cdue8tfdYlK6FXKPsE3ReUmbzHDber+gmSHt1kDlkCJISZ4BBDQ==
+
 lru-cache@^4.1.2:
   version "4.1.5"
   resolved "https://registry.npmmirror.com/lru-cache/-/lru-cache-4.1.5.tgz#8bbe50ea85bed59bc9e33dcab8235ee9bcf443cd"

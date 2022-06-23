@@ -1,79 +1,23 @@
 <template>
-  <div class='song-list'>
+  <div class='song-list' ref='songListRef'>
     <div class='song-title'>
-      <div class='title-left'>创建歌单（6）个</div>
+      <div class='title-left'>创建歌单（{{SongListData.length}}）个</div>
       <div class='title-right'>
         <div class='iconfont icon-jiahao'></div>
         <div class='iconfont icon-sangedian'></div>
       </div>
     </div>
-    <div class='song'>
-      <div class='song-list-item'>
+    <div class='song' ref='ScrollRef'>
+      <div class='song-list-item'
+           v-for='item in SongListData'
+           @scroll='scrollHandle'
+           @click='playlist(item.id)'>
+
         <div class='left'>
-          <img src='../../../assets/image/img2.jpg' alt=''>
+          <img :src=item.coverImgUrl alt=''>
           <div>
-            <div class='title'>美女都听得歌儿</div>
-            <div class='iconfont icon-right'>  360 首</div>
-          </div>
-        </div>
-        <div class='right'>
-          <div class='iconfont icon-sangedian'></div>
-        </div>
-      </div>
-      <div class='song-list-item'>
-        <div class='left'>
-          <img src='../../../assets/image/img6.jpg' alt=''>
-          <div>
-            <div class='title'>吉他</div>
-            <div class='iconfont '>  8 首</div>
-          </div>
-        </div>
-        <div class='right'>
-          <div class='iconfont icon-sangedian'></div>
-        </div>
-      </div>
-      <div class='song-list-item'>
-        <div class='left'>
-          <img src='../../../assets/image/img5.jpg' alt=''>
-          <div>
-            <div class='title'>爆炒鱿鱼</div>
-            <div class='iconfont '>  99 首</div>
-          </div>
-        </div>
-        <div class='right'>
-          <div class='iconfont icon-sangedian'></div>
-        </div>
-      </div>
-      <div class='song-list-item'>
-        <div class='left'>
-          <img src='../../../assets/image/img3.jpg' alt=''>
-          <div>
-            <div class='title'>巴拉拉小魔仙</div>
-            <div class='iconfont '>  897 首</div>
-          </div>
-        </div>
-        <div class='right'>
-          <div class='iconfont icon-sangedian'></div>
-        </div>
-      </div>
-      <div class='song-list-item'>
-        <div class='left'>
-          <img src='../../../assets/image/image.jpg' alt=''>
-          <div>
-            <div class='title'>哎呀哟哟哟</div>
-            <div class='iconfont icon-right'>  123 首</div>
-          </div>
-        </div>
-        <div class='right'>
-          <div class='iconfont icon-sangedian'></div>
-        </div>
-      </div>
-      <div class='song-list-item'>
-        <div class='left'>
-          <img src='../../../assets/image/img1.jpg' alt=''>
-          <div>
-            <div class='title'>蹦迪专业</div>
-            <div class='iconfont icon-right'>  666 首</div>
+            <div class='title'>{{ item.name }}</div>
+            <div class='iconfont icon-right'> {{ item.trackCount }} 首</div>
           </div>
         </div>
         <div class='right'>
@@ -85,14 +29,48 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
+import { onMounted, onBeforeUnmount,ref } from 'vue'
+import { playList } from '../../../network/userAPI'
+import router from '../../../router'
 
-export default defineComponent({
-  setup() {
-    return {}
+const SongListData = ref([])
+const ScrollRef =ref()
+const songListRef = ref()
+function scrollHandle() {
+  //距离=总高-滚动距离-可视区高
+  const scrollHeight = songListRef.value.scrollHeight
+  const scrollTop = songListRef.value.scrollTop
+  const clienHeight = ScrollRef.value.clientHeight //可视区高度
+  //
+  // const distance = scrollHeight - scrollTop - clienHeight
+  if(clienHeight - scrollTop < 600){
+
+  console.log('快要到底部了  加载新数据')
   }
+}
+
+onMounted(() => {
+  // 挂载时监听
+  console.log(ScrollRef.value)
+  ScrollRef.value.addEventListener('touchmove',scrollHandle)
 })
+onBeforeUnmount(() => {
+  //组件卸载时，停止监听
+  console.log('卸载完成',ScrollRef.value.removeEventListener)
+  ScrollRef.value.removeEventListener("touchmove", scrollHandle);
+});
+
+async function getSongList() {
+  const userID = JSON.parse(localStorage.getItem('userInfo'))
+  const Data = await playList(userID.id,10)
+  SongListData.value = Data.playlist
+}
+getSongList()
+
+function playlist(id) {
+  router.push({path:`/SongListItem/${id}`})
+}
 </script>
 
 <style scoped lang='less'>
@@ -102,6 +80,8 @@ export default defineComponent({
   background-color:  #f3f3f1;
   margin: 0 auto;
   border-radius: 10px;
+  overflow-y: scroll;
+  padding-bottom: 102px;
   .song-title{
     display: flex;
     justify-content: space-between;

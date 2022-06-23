@@ -1,48 +1,27 @@
 <template>
     <IconfontList>
-      <div class='icon-list'>
-        <img :src='img' alt=''>
-        <div class='list-title'>我的圈子</div>
-      </div>
-      <div class='icon-list'>
-        <img src='../../../assets/image/img4.jpg' alt=''>
-        <div class='list-title'>清鱿</div>
-      </div>
-      <div class='icon-list'>
-        <img src='../../../assets/image/img2.jpg' alt=''>
-        <div class='list-title'>巴卡马卡~</div>
-      </div>
-      <div class='icon-list'>
-        <img src='../../../assets/image/img6.jpg' alt=''>
-        <div class='list-title'>我是大漂亮</div>
-      </div>
-      <div class='icon-list'>
-        <img src='../../../assets/image/img5.jpg' alt=''>
-        <div class='list-title'>嗨害嗨</div>
-      </div>
-      <div class='icon-list'>
-        <img src='../../../assets/image/img1.jpg' alt=''>
-        <div class='list-title'>嗨害嗨</div>
+      <div class='icon-list' v-for='item in followsRef'>
+        <img :style='item.accountStatus === 0 && "border:0"' :src=item.avatarUrl alt='' >
+        <div class='list-title'>{{ item.nickname }}</div>
       </div>
     </IconfontList>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
+import { ref } from 'vue'
 import IconfontList from '../../../components/common/iconfontList/IconfontList'
+import { UserConcern } from '../../../network/follows'
 
-export default defineComponent({
-  components:{
-    IconfontList
-  },
-  setup() {
-    const userInfo = localStorage.getItem('userInfo')
-    const img = JSON.parse(userInfo).profile.avatarUrl
-    return {
-      img
-    }
-  }
-})
+const followsRef = ref([])
+
+async function getData(){
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+  const data = await UserConcern(userInfo.id,10)
+  followsRef.value = data.follow
+}
+getData()
+
+
 </script>
 
 <style scoped lang='less'>

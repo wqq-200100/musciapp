@@ -5,14 +5,18 @@ export default createStore({
     return {
       musicUrl: '',
       musicInfo: {
-        name: ''
+        name: '',
+        picUrl: '',
+        id:''
       },
       isActive: false,
-      bofangqiDOM: null
+      bofangqiDOM: null,
+      Lyric:'',
+      currentTime:0,
     }
   },
   mutations: {
-    musicUrlSetter(state, { musicUrl, musicInfo }) {
+    musicUrlSetter(state, { musicUrl, musicInfo}) {
       state.musicUrl = musicUrl
       state.musicInfo = musicInfo
     },
@@ -21,6 +25,12 @@ export default createStore({
     },
     setBofangqiDOM(state, dom){
       state.bofangqiDOM = dom
+    },
+    setLyric(state,Lyric){
+      state.Lyric = Lyric
+    },
+    setCurrentTime(state,time){
+      state.currentTime = time
     }
   }
 })

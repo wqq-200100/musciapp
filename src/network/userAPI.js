@@ -13,3 +13,10 @@ export function login(phone,psw){
     url:`/login/cellphone?phone=13548162664&password=qw89937257`,
   })
 }
+
+// 获取用户歌单
+export function playList(id,limit){
+  return request({
+    url:`/user/playlist?uid=${id}&limit=${limit}`,
+  })
+}

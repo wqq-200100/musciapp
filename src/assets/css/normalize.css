@@ -3,7 +3,7 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-body {
+body,ul {
   margin: 0;
 }
 

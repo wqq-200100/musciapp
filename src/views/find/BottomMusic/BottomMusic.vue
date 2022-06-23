@@ -13,9 +13,11 @@
 
     <div class='box'>
       <div class='box-top' v-for='item in recommendSonsList'>
-        <div class='left' @click='playMusicurl(item.id)'>
-          <img :src='item.al.picUrl' alt=''>
-          <div class='title'>{{ item.name }} <span> -{{item.ar[0].name}} </span></div>
+        <div class='left' @click='playMusicurl(item.resourceId)'>
+          <img :src='item.data.al.picUrl' alt=''>
+          <div class='title'>
+            <span class='name'>{{ item.data.name }}</span>
+            <span class='songName'> &nbsp - {{item.data.ar[0].name}} </span></div>
           <div class='iconfont icon-sanjiaoxing'></div>
         </div>
       </div>
@@ -31,14 +33,16 @@ import { recommendSons } from '../../../network/find'
 import { ref } from 'vue'
 
 const recommendSonsList = ref([])
+
 async function get() {
   const res = await recommendSons()
-  recommendSonsList.value = res.data.dailySongs
+  recommendSonsList.value = res.data.list
 }
 get()
 
 //歌曲url和歌曲详情
 async function playMusicurl(musicID) {
+  // 保存musicID到store中 通过id获取歌词
   getMusicDataAction(musicID)
 }
 </script>
@@ -70,6 +74,7 @@ async function playMusicurl(musicID) {
     display: flex;
     height: 400px;
     flex-direction: column;
+    padding-bottom: 102px;
 
     img {
       width: 55px;
@@ -83,11 +88,13 @@ async function playMusicurl(musicID) {
     }
 
     .left, .right {
-      width: 403px;
+      width: 100%;
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      margin: 1px 7px;
+      margin: 1px 0px;
+      justify-items: center;
+      align-items: center;
 
       .iconfont {
         width: 28px;
@@ -104,8 +111,24 @@ async function playMusicurl(musicID) {
         font-size: 17px;
         font-weight: 500;
         margin-left: 15px;
+        width: 270px;
+        overflow: hidden;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
 
-        span {
+        span{
+          overflow: hidden;
+          display: inline-block;
+        }
+        .name{
+          overflow: hidden;
+          text-overflow: ellipsis; /* 超出内容显示为省略号 */
+          white-space: nowrap;
+          max-width: 170px;
+        }
+        .songName {
           font-size: 14px;
           color: #888;
         }

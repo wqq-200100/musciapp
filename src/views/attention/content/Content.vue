@@ -15,86 +15,26 @@
     <div class='iconfont icon-youjiantou'></div>
   </div>
 
-  <div class='message'>
+  <div class='message' v-for='item in dataComment'>
     <div class='comment'>
-      <img src='../../../assets/image/img5.jpg' alt=''>
+      <img :src=item.sharePicUrl alt=''>
       <div class='detail'>
-        <div class='name'>哈哈哈哈哈 <span>分享歌曲:</span></div>
-        <div class='time'>昨天半夜</div>
+        <div class='name'>{{ item.title }} <span>分享歌曲:</span></div>
+        <!--<div class='time'>昨天半夜</div>-->
       </div>
     </div>
     <div class='description'>
-      <div class='meg'>
-        喜欢美女喜欢美女喜欢美女喜欢美女喜欢美女喜欢美女
-        喜欢美女喜欢美女
-      </div>
-      <div class='music' @click='changeMusic(1919322135)' >
-        <img src='../../../assets/image/img1.jpg' alt=''>
-        <div>
-          <div class='name'>存在（电视剧《北京青年》片尾曲</div>
-          <div class='singer'>汪峰</div>
+      <div class='meg' v-if='item.text.length >0'>
+        <div v-for='i in item.text'>
+          {{ i }}
         </div>
       </div>
-    </div>
-    <div class='review'>
-      <div class='review-list'>
-        <div class='iconfont icon-fenxiang'>9</div>
-        <div class='iconfont icon-pinglun'>199</div>
-        <div class='iconfont icon-dianzan'>1999</div>
-      </div>
-      <div class='iconfont icon-sangedian'></div>
-    </div>
-  </div>
-  <div class='message'>
-    <div class='comment'>
-      <img src='../../../assets/image/image.jpg' alt=''>
-      <div class='detail'>
-        <div class='name'>哈哈哈哈哈 <span>分享歌曲:</span></div>
-        <div class='time'>昨天半夜</div>
-      </div>
-    </div>
-    <div class='description'>
-      <div class='meg'>
-        哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-        哈哈哈哈哈哈哈嗨害嗨嗨害嗨哈哈哈哈哈哈哈哈哈哈
-        哈哈哈哈哈嗨害嗨
-      </div>
-      <div class='music'>
-        <img src='../../../assets/image/img1.jpg' alt=''>
-        <div>
-          <div class='name'>存在（电视剧《北京青年》片尾曲</div>
-          <div class='singer'>汪峰</div>
-        </div>
-      </div>
-    </div>
-    <div class='review'>
-      <div class='review-list'>
-        <div class='iconfont icon-fenxiang'>9</div>
-        <div class='iconfont icon-pinglun'>199</div>
-        <div class='iconfont icon-dianzan'>1999</div>
-      </div>
-      <div class='iconfont icon-sangedian'></div>
-    </div>
-  </div>
-  <div class='message'>
-    <div class='comment'>
-      <img src='../../../assets/image/image.jpg' alt=''>
-      <div class='detail'>
-        <div class='name'>哈哈哈哈哈 <span>分享歌曲:</span></div>
-        <div class='time'>昨天半夜</div>
-      </div>
-    </div>
-    <div class='description'>
-      <div class='meg'>
-        哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-        哈哈哈哈哈哈哈嗨害嗨嗨害嗨哈哈哈哈哈哈哈哈哈哈
-        哈哈哈哈哈嗨害嗨
-      </div>
-      <div class='music'>
-        <img src='../../../assets/image/img1.jpg' alt=''>
-        <div>
-          <div class='name'>存在（电视剧《北京青年》片尾曲</div>
-          <div class='singer'>汪峰</div>
+
+      <div class='music' @click='changeMusic(1919322135)'>
+          <img src=../../../assets/image/img6.jpg alt=''>
+          <div>
+            <div class='name'>存在（电视剧《北京青年》片尾曲</div>
+            <div class='singer'>汪峰</div>
         </div>
       </div>
     </div>
@@ -110,15 +50,32 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
-import { getMusicUrl } from '../../../network/find'
+import { ref } from 'vue'
+import { getMusicUrl, recommendSons } from '../../../network/find'
 import myvuex from '../../../store'
+import { topic } from '../../../network/follows'
+
+const dataComment = ref([])
+const songList = ref([])
 
 async function changeMusic(id){
   const res = await getMusicUrl(id)
   const url = res.data[0].url
   myvuex.commit('musicUrlSetter',url)
 }
+
+async function hotTopic(){
+  const data = await topic()
+  dataComment.value = data.hot
+}
+hotTopic()
+
+async function Song(){
+  const songData = await recommendSons()
+  console.log(songData.data)
+  songList.value = songData.data.list
+}
+Song()
 
 </script>
 

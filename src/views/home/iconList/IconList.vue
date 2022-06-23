@@ -60,7 +60,7 @@
       <div class='iconfont icon-cuowu'></div>
     </div>
   </div>
-  <SongList>
+  <likeSongList>
     <template #img>
       <img src='../../../assets/image/img4.jpg' alt=''>
     </template>
@@ -73,32 +73,34 @@
     <template #right>
       <div class='iconfont icon-duoyunye'><span>心动模式</span></div>
     </template>
-  </SongList>
+  </likeSongList>
   <div class='bar'>
-    <div class='left'>创建歌单</div>
-    <div class='center'>收藏歌单</div>
-    <div class='right'>歌单助手</div>
+    <div @click="handleClick(1)" class="item">
+      <router-link to='/home/SongList'><div :class="active === 1 && 'active'">创建歌单</div></router-link>
+    </div>
+    <div @click="handleClick(2)" class="item">
+      <div :class="active === 2 && 'active'">收藏歌单</div>
+    </div>
   </div>
+  <router-view/>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
-import SongList from '../../../components/common/songlist/SongList'
+<script setup>
+import { ref } from 'vue'
+import likeSongList from '../../../components/common/songlist/SongList'
 
-export default defineComponent({
-  components:{
-    SongList
-  },
-  setup() {
-    return {}
-  }
-})
+const active = ref(1)
+
+function handleClick(val){
+  active.value = val
+}
+
 </script>
 
 <style scoped lang='less'>
 .icon-list{
   width: 95%;
-  height: 232px;
+  height: 210px;
   background-color:  #f3f3f1;
   margin: 16px auto 0;
   border-radius: 10px;
@@ -138,15 +140,19 @@ export default defineComponent({
     border: 3px solid red;
   }
 }
+
 .bar{
   display: flex;
   justify-content: space-between;
-  padding: 14px;
   font-size: 17px;
-  margin: 0 30px;
-  .left{
+  margin: 16px 80px;
+  .active{
     font-weight: 900;
-    border-bottom: 4px solid red;
+    border-bottom: 5px solid red;
+  }
+  a{
+    text-decoration: none;
+    color: black;
   }
 }
 img{
@@ -155,7 +161,6 @@ img{
   border-radius: 5px;
 }
 div{
-  margin-left: 9px;
   .title{
     font-size: 16px;
     font-weight: 500;

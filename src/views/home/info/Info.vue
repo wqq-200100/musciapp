@@ -1,35 +1,25 @@
 <template>
-  <img :src='data.avatarUrl' alt=''>
+  <img :src='infoData.avatarUrl' alt=''>
   <div class='info'>
-    <div class='info-name'>{{ data.nickname }}</div>
+    <div class='info-name'>{{ infoData.nickname }}</div>
     <div class='info-msg'>
-      <span>11 关注</span>
+      <span>{{infoData.newFollows}} 关注</span>
       <span>3 粉丝</span>
-      <span>Lv.99</span>
+      <span>Lv.{{infoData.vipType}}</span>
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import { getUserInfoByID } from '@/network/userAPI'
-import { reactive } from 'vue'
+import { ref } from 'vue'
 
+const infoData = ref([])
 
-export default {
-  setup() {
-    let data = reactive({
-      avatarUrl:'',
-      nickname: ''
-    })
-
-    async function getUserINfo() {
-      const res = await getUserInfoByID(269987313)
-      data.avatarUrl = res.profile.avatarUrl
-      data.nickname = res.profile.nickname
-    }
-    getUserINfo()
-    return { data }
-  }
+async function getUserInfo() {
+  const data = await getUserInfoByID(269987313)
+  infoData.value = data.profile
 }
+getUserInfo()
 </script>
 
 <style scoped lang='less'>

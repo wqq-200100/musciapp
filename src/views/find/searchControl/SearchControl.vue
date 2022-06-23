@@ -2,37 +2,59 @@
   <Search>
     <div class='box'>
       <i class='iconfont icon-sousuo'></i>
-      <input type='text' placeholder='美女都喜欢的歌儿' @click='$router.push()'>
+      <input v-model='searchContent'
+             placeholder='美女都喜欢的歌儿'
+             type='text' />
     </div>
+    <ul v-show='isShow' class='List'>
+      <router-link v-for='item in searchData' :to='{path:"/Player",query:{id:item.id}}'>
+        <div class='searchData'>
+          <div class='iconfont icon-sousuo' />
+          <div class='info'>
+            <div class='txt'>{{ item.name }}</div>
+          </div>
+        </div>
+      </router-link>
+    </ul>
   </Search>
 </template>
 
-<script>
-import { defineComponent,reactive} from 'vue'
+<script setup>
+import { reactive, ref, watch } from 'vue'
 import Search from '../../../components/common/search/Search'
-import { SearchItemName } from '../../../network/find.js'
+import { getSearch } from '../../../network/find'
 
-export default defineComponent({
-  components:{
-    Search
-  },
-  setup() {
+const searchData = ref([])
+const searchContent = ref('')
+const isShow = ref(true)
 
-
-    return {}
+watch(searchContent, async () => {
+  if (searchContent.value === '') {
+    isShow.value = false
+  } else {
+    isShow.value = true
+    const res = await getSearch(searchContent.value, 10)
+    console.log(res)
+    if (res.code === 200) {
+      searchData.value = res.result.songs
+    }
   }
+
 })
 </script>
 
-<style scoped lang='less'>
-.box{
+<style lang='less' scoped>
+.box {
   position: relative;
-  .iconfont{
+
+  .iconfont {
     position: absolute;
     left: 11%;
+    top: 9px;
     line-height: 30px;
   }
-  input{
+
+  input {
     height: 30px;
     width: 90%;
     margin-left: 5%;
@@ -40,12 +62,39 @@ export default defineComponent({
     background: #f3f3f1;
     border-radius: 17px;
     padding-left: 31px;
+    margin-top: 6px;
   }
-  ul{
+
+  ul {
     list-style: none;
     width: 100%;
-    span{
+
+    span {
       margin-left: -157px;
+    }
+  }
+}
+
+.List {
+  list-style-type: none;
+  margin-left: 13%;
+  margin-top: 8px;
+  background: #fff;
+
+  .searchData {
+    display: flex;
+    color: black;
+    background: #fff;
+    padding: 10px;
+    width: 93%;
+
+    .info {
+      display: flex;
+      margin-left: 10px;
+
+      .txt {
+        margin-left: 3px;
+      }
     }
   }
 }

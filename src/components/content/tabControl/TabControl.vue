@@ -18,13 +18,13 @@
         <template #item-text>我的</template>
       </TabBarItem>
     </router-link>
-    <router-link to='attention' class='link'>
+    <router-link to='/attention' class='link'>
       <TabBarItem>
         <template #item-icon><div class='iconfont icon-weibiaoti--'></div></template>
         <template #item-text>关注</template>
       </TabBarItem>
     </router-link>
-    <router-link to='cloud' class='link'>
+    <router-link to='/cloud' class='link'>
       <TabBarItem>
         <template #item-icon><div class='iconfont icon-duoyunye'></div></template>
         <template #item-text>云村</template>
